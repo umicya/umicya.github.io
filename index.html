@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="umicya — 游戏开发工程师的线上小窝。敬畏 AI，理解 AI，成为 AI。" />
+  <meta name="color-scheme" content="light dark" />
+  <title>umicya · whims</title>
+  <script>
+    // 防闪烁：先于 CSS 根据本地偏好锁定主题
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="frame" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="wordmark" href="/">
+      <span class="wm-main">umicya</span>
+      <span class="wm-dot">·</span>
+      <span class="wm-sub">whims</span>
+    </a>
+    <nav class="nav">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="https://blog.iik.moe" target="_blank" rel="noopener">blog <span class="ext">↗</span></a>
+      <a href="https://github.com/umicya" target="_blank" rel="noopener">github <span class="ext">↗</span></a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题" title="切换明暗模式">
+      <span class="theme-icon" id="theme-icon">🌗</span>
+      <span class="theme-label" id="theme-label">auto</span>
+    </button>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <p class="overline">GAME DEV · COMPUTER SCIENCE · IEG</p>
+      <h1 class="hero-title">
+        <span class="line">敬畏 AI，</span>
+        <span class="line">理解 AI，</span>
+        <span class="line">成为 AI。</span>
+      </h1>
+      <p class="hero-sub">
+        我用免费模型改你的代码，你不会介意吧？
+      </p>
+      <p class="hero-note">
+        <span class="mono">// TODO: 写个正经的自我介绍</span><br />
+        <span class="mono">// status: 无限延期，反正没人看</span>
+      </p>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="section-head">
+        <span class="section-tag">ABOUT</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="about-grid">
+        <p class="about-text">
+          你好，我是 <strong>umicya</strong> —— 一名游戏开发工程师。<br />
+          计算机科学出身，日常在 <strong>IEG</strong> 搬砖，
+          业余喜欢<em>画画</em>和<em>音乐</em>。
+        </p>
+        <ul class="about-list">
+          <li><span class="mono">$</span> whoami <span class="ans">→ 一个会写代码也会画画的游戏人</span></li>
+          <li><span class="mono">$</span> cat skills.txt <span class="ans">→ 游戏引擎 / 图形 / 摸鱼</span></li>
+          <li><span class="mono">$</span> uptime <span class="ans">→ IEG · full-time</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects" id="projects">
+      <div class="section-head">
+        <span class="section-tag">PROJECTS</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="cards">
+        <div class="card card--primary">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">01</span>
+          <h2 class="card-title">ruru</h2>
+          <p class="card-desc">
+            一个小型游戏引擎：raylib + EnTT + Taskflow。<br />
+            正在努力把它打成 <strong>wasm</strong> 搬到这里跑起来。
+          </p>
+          <span class="card-meta">status: 策划案筹备中，敬请期待（大概）</span>
+          <div class="card-badge">WASM · COMING SOON</div>
+        </div>
+
+        <a class="card" href="life/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">02</span>
+          <h2 class="card-title">上班魂</h2>
+          <p class="card-desc">
+            大厂社畜人生模拟器：roll 出身词条，拿命换钱。<br />
+            七大系统 · 享年 · LTV · 综合评分。
+          </p>
+          <span class="card-meta">status: 可以玩了</span>
+          <div class="card-badge">LIFE SIM</div>
+        </a>
+
+        <a class="card" href="life-test/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">03</span>
+          <h2 class="card-title">凡人歌</h2>
+          <p class="card-desc">
+            旧版人生模拟器（已归档至 life-test）。<br />
+            随机 roll 出身词条，活出你的一生。
+          </p>
+          <span class="card-meta">status: 归档 · 可玩</span>
+          <div class="card-badge">ARCHIVED</div>
+        </a>
+
+        <a class="card" href="https://blog.iik.moe" target="_blank" rel="noopener">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">04</span>
+          <h2 class="card-title">Blog <span class="ext">↗</span></h2>
+          <p class="card-desc">blog.iik.moe — 长文、笔记，以及一些深夜输出。</p>
+          <span class="card-meta">blog.iik.moe</span>
+        </a>
+
+        <a class="card" href="https://github.com/umicya" target="_blank" rel="noopener">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">05</span>
+          <h2 class="card-title">GitHub <span class="ext">↗</span></h2>
+          <p class="card-desc">github.com/umicya — 代码、实验、以及更多 bug。</p>
+          <span class="card-meta">github.com/umicya</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span id="year">2026</span> umicya · whims</span>
+    <span class="foot-sep">/</span>
+    <span>本页面由一位游戏开发工程师 + 若干免费模型联合出品</span>
+    <span class="foot-sep">/</span>
+    <span>若页面崩溃，请刷新，或对它说声抱歉</span>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
