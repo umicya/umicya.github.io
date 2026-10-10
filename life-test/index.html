@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="凡人歌 · 人生模拟器 — 随机出身，活出你的一生。" />
+  <meta name="color-scheme" content="light dark" />
+  <title>凡人歌 · 人生模拟器</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="frame" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="wordmark" href="../index.html">
+      <span class="wm-main">umicya</span>
+      <span class="wm-dot">·</span>
+      <span class="wm-sub">凡人歌</span>
+    </a>
+    <div class="head-right">
+      <span class="subtitle">人生模拟器</span>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题">
+        <span class="theme-icon" id="theme-icon">🌗</span>
+        <span class="theme-label" id="theme-label">auto</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ 开局：roll 出身 ============ -->
+    <section class="screen active" id="screen-start">
+      <div class="start-head">
+        <p class="overline">ROLL YOUR BIRTHRIGHT</p>
+        <h1 class="start-title">投胎是门技术活</h1>
+        <p class="start-sub">随机 roll 出三个出身词条，选一个，开启你的一生。</p>
+      </div>
+      <div class="roll-box" id="roll-box"></div>
+      <div class="seed-line">
+        <span class="mono">SEED <span id="roll-seed">—</span></span>
+        <button class="ghost-btn" id="btn-roll" type="button">↻ 重 roll</button>
+        <button class="ghost-btn" id="btn-rebirth" type="button">🔁 重生（同种子）</button>
+      </div>
+    </section>
+
+    <!-- ============ 人生推进 ============ -->
+    <section class="screen" id="screen-life">
+      <!-- 顶部状态栏 -->
+      <div class="status-bar">
+        <div class="stat">
+          <span class="stat-k">年龄</span>
+          <span class="stat-v" id="stat-age">0</span>
+          <span class="stat-u">岁</span>
+        </div>
+        <div class="stat">
+          <span class="stat-k">寿元</span>
+          <span class="stat-v" id="stat-lifespan">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-k">现金</span>
+          <span class="stat-v" id="stat-money">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-k">累计收入</span>
+          <span class="stat-v" id="stat-income">0</span>
+        </div>
+      </div>
+
+      <!-- 寿元条 -->
+      <div class="lifebar">
+        <div class="lifebar-fill" id="bar-lifespan-fill" style="width:100%"></div>
+      </div>
+
+      <!-- 五维 -->
+      <div class="stats-grid">
+        <div class="attr">
+          <span class="attr-name">颜值</span>
+          <div class="bar"><div class="bar-fill" id="bar-appearance" style="width:50%"></div></div>
+        </div>
+        <div class="attr">
+          <span class="attr-name">智力</span>
+          <div class="bar"><div class="bar-fill" id="bar-intellect" style="width:50%"></div></div>
+        </div>
+        <div class="attr">
+          <span class="attr-name">体质</span>
+          <div class="bar"><div class="bar-fill" id="bar-physique" style="width:50%"></div></div>
+        </div>
+        <div class="attr">
+          <span class="attr-name">家境</span>
+          <div class="bar"><div class="bar-fill" id="bar-wealth" style="width:50%"></div></div>
+        </div>
+        <div class="attr">
+          <span class="attr-name">快乐</span>
+          <div class="bar"><div class="bar-fill" id="bar-happiness" style="width:50%"></div></div>
+        </div>
+      </div>
+
+      <!-- 阶段 + 词条 -->
+      <div class="meta-line">
+        <span class="stage-label" id="stage-label">童年</span>
+        <span class="trait-badge" id="trait-badge"></span>
+      </div>
+
+      <!-- 日志 -->
+      <div class="log" id="log"></div>
+
+      <!-- 控制 -->
+      <div class="controls">
+        <button class="btn btn-primary" id="btn-year" type="button">+ 一年</button>
+        <button class="btn" id="btn-auto" type="button">自动推进</button>
+        <button class="btn btn-ghost" id="btn-restart" type="button">重新开始</button>
+      </div>
+      <p class="hint">空格键 = 推进一年</p>
+    </section>
+
+    <!-- ============ 退休结算（60 岁默认停点） ============ -->
+    <section class="screen" id="screen-retire">
+      <p class="overline">RETIREMENT · 退休结算</p>
+      <div class="end-card">
+        <div class="end-grade" id="retire-grade">B</div>
+        <div class="end-label" id="retire-label">到点了</div>
+        <div class="end-score">综合评分 <strong id="retire-score">0</strong> / 100</div>
+        <div class="end-line">🏁 你到了 60 岁，光荣退休。</div>
+
+        <div class="end-grid">
+          <div class="end-item"><span class="ei-k">享年</span><span class="ei-v" id="retire-age">60</span><span class="ei-u">岁</span></div>
+          <div class="end-item"><span class="ei-k">LTV</span><span class="ei-v" id="retire-ltv">0</span></div>
+          <div class="end-item"><span class="ei-k">终局现金</span><span class="ei-v" id="retire-money">0</span></div>
+          <div class="end-item"><span class="ei-k">剩余寿元</span><span class="ei-v" id="retire-life">0</span></div>
+        </div>
+
+        <p class="retire-hint">寿元还剩 <strong id="retire-life-hint">0</strong>，可继续过晚年（可能寿终，也可能继续活得长久）。</p>
+
+        <div class="controls" style="margin-top: 16px;">
+          <button class="btn btn-primary" id="btn-retire-continue" type="button">继续晚年 →</button>
+          <button class="btn" id="btn-retire-end" type="button">就此收尾</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 结算 ============ -->
+    <section class="screen" id="screen-end">
+      <p class="overline" id="end-over">GAME OVER · 结算</p>
+      <div class="end-card">
+        <div class="end-grade" id="end-grade">S</div>
+        <div class="end-label" id="end-label">人生赢家</div>
+        <div class="end-score">综合评分 <strong id="end-score">0</strong> / 100</div>
+        <div class="end-line" id="end-line">这一生，值了。</div>
+        <div class="end-death-alert" id="end-death-alert" style="display:none;">
+          ⚠ 猝死！寿元提前耗尽，享年 <strong id="end-death-age">0</strong> 岁。拿命换钱，钱没命花。
+        </div>
+
+        <div class="end-grid">
+          <div class="end-item"><span class="ei-k">享年</span><span class="ei-v" id="end-age">0</span><span class="ei-u">岁</span></div>
+          <div class="end-item"><span class="ei-k">离世</span><span class="ei-v" id="end-reason">—</span></div>
+          <div class="end-item"><span class="ei-k">出身</span><span class="ei-v" id="end-trait">—</span></div>
+          <div class="end-item"><span class="ei-k">LTV</span><span class="ei-v" id="end-ltv">0</span></div>
+          <div class="end-item"><span class="ei-k">终局现金</span><span class="ei-v" id="end-money">0</span></div>
+          <div class="end-item"><span class="ei-k">快乐峰值</span><span class="ei-v" id="end-peakhappy">0</span></div>
+          <div class="end-item"><span class="ei-k">智力巅峰</span><span class="ei-v" id="end-intel">0</span></div>
+          <div class="end-item"><span class="ei-k">SEED</span><span class="ei-v mono" id="end-seed">—</span></div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-again" type="button">再来一局</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>凡人歌 · 人生模拟器</span>
+    <span class="foot-sep">/</span>
+    <span>拿命换钱，还是拿钱买命？</span>
+    <span class="foot-sep">/</span>
+    <a href="../index.html">← 返回主页</a>
+  </footer>
+
+  <script src="game.js"></script>
+</body>
+</html>
