@@ -1,0 +1,29 @@
+body{touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#journey,#loading{position:fixed;inset:0;z-index:15;display:grid;place-items:center}
+#journey{background:repeating-linear-gradient(0deg,#26232c 0 3px,#292630 3px 5px);padding:clamp(12px,4vw,64px)}
+#parchment{position:relative;width:100%;height:100%;max-width:1350px;max-height:780px;border:4px double #594855;outline:1px solid #c7b598;background:#dbccb1;box-shadow:0 10px 28px #120f18b0;overflow:hidden}
+#terrain{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+#parchment h1{position:absolute;top:5%;left:5%;margin:0;font:700 clamp(22px,4vw,43px) SimSun,serif;color:#493641;letter-spacing:.20em}
+.pin{position:absolute;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:3px;background:transparent;border:0;padding:8px;color:#352731}
+.pin img{width:clamp(82px,14vw,167px);height:auto;image-rendering:pixelated;filter:drop-shadow(2px 5px 0 #59434855);transition:transform .14s}
+.pin:hover img,.pin:focus-visible img{transform:translateY(-4px)}
+.pin span{font:700 clamp(16px,2.2vw,24px) SimSun,serif;letter-spacing:.15em;background:#342a34;color:#f3e4c9;border:2px solid #cba982;box-shadow:2px 3px 0 #4837436b;padding:4px 12px}
+.pin small{background:#ddceb3df;color:#493642;font-size:11px;letter-spacing:.1em;padding:2px 4px}
+.farm{left:28%;top:65%}.keep{left:72%;top:34%}
+#loading{z-index:18;background:#211d27;color:#f3dfbd;align-content:center;gap:18px;font:30px SimSun,serif;letter-spacing:.22em}
+#loading i{width:120px;height:2px;background:#d6ad76;transform-origin:left;animation:travel .55s ease-out both}
+@keyframes travel{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+#lesson{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:7;width:min(440px,85%);text-align:center;background:#211a23ee;border:1px solid #d3b181;padding:12px 18px;pointer-events:none;box-shadow:0 4px 24px #17101c69}
+#lesson h2{font:22px SimSun,serif;letter-spacing:.15em;margin:5px}#lesson p{font-size:14px;line-height:1.5;margin:4px}
+#pause-game{position:absolute;top:3%;left:3%;padding:5px 10px;font:16px sans-serif}
+#return-map{margin-top:8px}#journey[hidden],#loading[hidden],#lesson[hidden]{display:none}
+#modal{z-index:8}
+@media(orientation:portrait){.farm{left:34%;top:69%}.keep{left:67%;top:32%}.pin img{width:110px}
+#enemy{width:58%;top:2%}#enemy .name{font-size:17px}#status{top:15%;right:4%}#status .name{font-size:15px}
+header{width:42%;bottom:10%}#lesson{bottom:19%}footer{line-height:1.5}}
+@media(pointer:coarse){footer{font-size:11px;bottom:max(2%,env(safe-area-inset-bottom))}#pause-game{min-width:40px;min-height:36px}}
+@media(max-height:480px){.pin img{width:85px}#enemy .name{font-size:16px;margin:2px}#enemy .bar{height:5px}#enemy .poise{height:3px}header{bottom:8%}#lesson{padding:5px 10px;bottom:8%}#lesson h2{font-size:17px}#lesson p{font-size:12px}}
+html,body{height:100%;width:100%;overflow:hidden}
+body{position:fixed;inset:0}
+body>canvas:first-child{position:absolute;inset:0}
+#hero{top:0;left:0;height:0}

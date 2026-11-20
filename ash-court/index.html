@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>烬庭</title>
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #161820;
+        color: #f7eada;
+        font: 15px "Microsoft YaHei", sans-serif
+    }
+
+    canvas {
+        display: block
+    }
+
+    #hero {
+        position: absolute;
+        pointer-events: none;
+        transform-origin: 52% 92%;
+        image-rendering: pixelated;
+        filter: drop-shadow(1px 2px 2px #2a161980)
+    }
+
+    #veil {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(0deg, #100e19b0, transparent 19%, transparent 82%, #16121e69), radial-gradient(ellipse, transparent 54%, #19101d40)
+    }
+
+    header,
+    footer,
+    #enemy,
+    #cue,
+    #status,
+    #modal {
+        position: absolute
+    }
+
+    header {
+        bottom: 9%;
+        left: 4%;
+        width: min(280px, 32vw)
+    }
+
+    small,
+    .caption {
+        letter-spacing: .22em;
+        color: #ecd8bd;
+        font-size: 10px
+    }
+
+    .name {
+        font: 600 22px SimSun, serif;
+        letter-spacing: .16em;
+        margin: 5px 0 8px;
+        text-shadow: 0 1px 6px #111
+    }
+
+    .bar {
+        height: 8px;
+        background: #211c26;
+        border: 1px solid #a9947a;
+        box-shadow: 0 1px 5px #171019;
+        margin: 4px 0
+    }
+
+    .bar i {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, #7c293d, #cf6c68);
+        transition: width .08s
+    }
+
+    .poise {
+        height: 5px
+    }
+
+    .poise i {
+        background: #dfbb82
+    }
+
+    .broken i {
+        background: #e6f2ff
+    }
+
+    #enemy {
+        top: 2%;
+        width: min(620px, 48%);
+        left: 50%; transform: translateX(-50%);
+        text-align: center
+    }
+
+    #enemy .name {
+        font-size: clamp(21px, 2.4vw, 34px);
+        letter-spacing: .32em
+    }
+
+    #enemy .bar {
+        height: 10px
+    }
+
+    #enemy .poise {
+        height: 4px
+    }
+
+    footer {
+        bottom: 2.8%;
+        left: 2%;
+        right: 2%;
+        text-align: center;
+        color: #efdbbf;
+        font-size: 12px;
+        line-height: 2;
+        letter-spacing: .06em
+    }
+
+    kbd {
+        font: 11px monospace;
+        border: 1px solid #af99826b;
+        padding: 2px 5px;
+        border-radius: 3px;
+        margin-left: 10px
+    }
+
+    #cue {
+        top: 19%;
+        left: 50%;
+        transform: translateX(-50%);
+        font: bold 22px SimSun, serif;
+        letter-spacing: .2em;
+        text-shadow: 0 2px 5px black
+    }
+
+    #status {
+        top: 4%;
+        right: 4%;
+        text-align: right;
+        text-shadow: 0 2px 5px #181019
+    }
+
+    #modal {
+        inset: 0;
+        display: grid;
+        place-content: center;
+        text-align: center;
+        background: #19151d80
+    }
+
+    #modal[hidden] {
+        display: none
+    }
+
+    button {
+        cursor: pointer;
+        color: #fff1d8;
+        background: #412b2b;
+        border: 1px solid #bca17e;
+        padding: 10px 28px;
+        font: 16px SimSun, serif;
+        letter-spacing: .15em
+    }
+
+    #modal h1 {
+        font: 48px SimSun, serif;
+        letter-spacing: .2em
+    }
+    #pressure,#bars,#bars-bottom{position:absolute;pointer-events:none}
+    #pressure{inset:0;background:radial-gradient(ellipse at 50% 38%,transparent 16%,rgba(15,0,7,.26) 43%,#080207 83%);opacity:0;transition:opacity .09s linear}
+    #bars,#bars-bottom{left:0;right:0;height:7%;background:#100d13;transform:scaleY(0)}
+    #bars{top:0;transform-origin:top}#bars-bottom{bottom:0;transform-origin:bottom}
+    body:not(.debug-skills) #cue,body:not(.debug-skills) #action{display:none}
+    .in-throw footer{visibility:hidden}
+    .in-throw #cue{top:auto;bottom:10%;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap;font-size:18px}
+
+    body.debug-skills .bar.clashing{border-color:#fff4cf;box-shadow:0 0 12px #ffe7a9}
+    body.debug-skills .bar.committed{border-color:#ff9662;box-shadow:0 0 9px #ff613a}
+    .bar.insufficient{border-color:#ff6d6d;box-shadow:0 0 10px #e64e4e}
+</style><link rel="stylesheet" href="journey.css">
+
+<body><img id="hero" src="assets/witch.png">
+    <canvas id="combat-fx" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none"></canvas>
+    <div id="veil"></div><div id="pressure"></div><div id="bars"></div><div id="bars-bottom"></div>
+    <header><small>烬 庭　/　剑 主</small>
+        <div class="name">涟</div>
+        <div class="bar"><i id="hp"></i></div>
+        <div class="bar poise"><i id="sp"></i></div><small id="stats"></small>
+    </header>
+    <div id="status"><small>城 堡 外 庭</small>
+        <div class="name">烬庭</div><span id="action"></span>
+    </div>
+    <div id="cue"></div>
+    <section id="enemy"><small id="stage-name">庭 院 守 卫</small>
+        <div class="name">玄骸 · 守门人</div>
+        <div class="bar"><i id="bh"></i></div>
+        <div class="bar poise"><i id="bs"></i></div>
+    </section>
+    <footer><kbd>A / D</kbd> 环绕 <kbd>Shift</kbd> 翻滚 <kbd>空格</kbd> 跳跃 <kbd>鼠标左键</kbd> 轻攻击 <kbd>F</kbd> 重攻击（耗韧） <kbd>鼠标右键</kbd> 按住格挡
+        <kbd>Esc</kbd> 暂停</footer>
+    <div id="modal" hidden>
+        <h1></h1><button></button><button id="return-map">返回地图</button>
+    </div>
+    <button id="pause-game" aria-label="暂停战斗">Ⅱ</button>
+    <aside id="lesson" hidden><small></small><h2></h2><p></p></aside>
+    <section id="journey" aria-label="选择关卡">
+      <div id="parchment"><canvas id="terrain" aria-hidden="true"></canvas>
+        <h1>山河行旅图</h1>
+        <button class="pin farm" data-level="field"><img src="assets/field-pin.png" alt=""><span>太虚灵田</span><small>修习 · 家用稻草人</small></button>
+        <button class="pin keep" data-level="castle"><img src="assets/castle-pin.png" alt=""><span>烬庭外庭</span><small>挑战 · 玄骸守门人</small></button>
+      </div>
+    </section>
+    <section id="loading" hidden aria-live="polite"><span></span><i></i></section>
+    <script src="assets/three.min.js"></script>
+    <script src="scene.js"></script>
+    <script src="assets/poses/supine-texture.js"></script>
+    <script src="poses.js"></script>
+    <script src="cinematics.js"></script><script src="inferno.js"></script><script src="timeline.js"></script><script src="field.js"></script><script src="school.js"></script><script src="journey.js"></script><script src="battle.js"></script>
+</body>
+
+</html>

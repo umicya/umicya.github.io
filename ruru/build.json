@@ -1,0 +1,9 @@
+{
+  "game": "ruru / Last Light",
+  "sourceCommit": "00d414d",
+  "files": {
+    "index.html": "dae4a8fb24c35fd852da674ee2d58516663763822407e1dc7f60c74be070547b",
+    "game.baa589e9afbc.js": "baa589e9afbc71e51add06fa4adc588387d8eb52723c40fb8a3e285fc2dea919",
+    "game.229e07d3b1a2.wasm": "229e07d3b1a2c7e7e86b10e97f5b92be7a0746e5237299f5f2affad33177c190"
+  }
+}

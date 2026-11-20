@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="游戏与交互实验。敬畏 AI，理解 AI，成为 AI。" />
+  <meta name="color-scheme" content="light dark" />
+  <title>whims · 游戏与交互实验</title>
+  <script>
+    // 防闪烁：先于 CSS 根据本地偏好锁定主题
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="frame" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="wordmark" href="/">
+      <span class="wm-main">whims</span>
+    </a>
+    <nav class="nav">
+      <a href="#projects">projects</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题" title="切换明暗模式">
+      <span class="theme-icon" id="theme-icon">🌗</span>
+      <span class="theme-label" id="theme-label">auto</span>
+    </button>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <p class="overline">GAMES · INTERACTIVE EXPERIMENTS</p>
+      <h1 class="hero-title">
+        <span class="line">敬畏 AI，</span>
+        <span class="line">理解 AI，</span>
+        <span class="line">成为 AI。</span>
+      </h1>
+      <p class="hero-sub">
+        我用免费模型改你的代码，你不会介意吧？
+      </p>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects" id="projects">
+      <div class="section-head">
+        <span class="section-tag">PROJECTS</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="cards">
+        <a class="card card--primary" href="ruru/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">01</span>
+          <h2 class="card-title">ruru</h2>
+          <p class="card-desc">
+            一个小型游戏引擎：raylib + EnTT + Taskflow。<br />
+            <strong>Last Light</strong>：观察晶砂、建设保存站，让精灵运输物资、维持生命。
+          </p>
+          <span class="card-meta">status: Web Demo · 可以玩了</span>
+          <div class="card-badge">WASM · PLAY DEMO</div>
+        </a>
+
+        <a class="card" href="life/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">02</span>
+          <h2 class="card-title">上班魂</h2>
+          <p class="card-desc">
+            大厂社畜人生模拟器：roll 出身词条，拿命换钱。<br />
+            七大系统 · 享年 · LTV · 综合评分。
+          </p>
+          <span class="card-meta">status: 可以玩了</span>
+          <div class="card-badge">LIFE SIM</div>
+        </a>
+
+        <a class="card" href="spacial/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">03</span>
+          <h2 class="card-title">Spacial</h2>
+          <p class="card-desc">
+            宇宙热寂精灵工厂：养成一群精灵，把物质、生命和信息运到别的星球。<br />
+            生产链 · 跨星物流 · 曲率轨道 · 认知树。
+          </p>
+          <span class="card-meta">status: Demo · 可以玩了</span>
+          <div class="card-badge">FACTORY SIM</div>
+        </a>
+
+        <a class="card" href="village/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">07</span>
+          <h2 class="card-title">山野之间</h2>
+          <p class="card-desc">
+            导演、家族、个体三层 HTN：四户家族协作生活，守关抵御狼群袭击。<br />
+            有限资源 · 生存与战斗 · 群落调度 · 可视化行为配置。
+          </p>
+          <span class="card-meta">status: Demo · 可以观察了</span>
+          <div class="card-badge">HTN · VILLAGE SIM</div>
+        </a>
+
+        <a class="card" href="ash-court/">
+          <div class="card-corner tl" aria-hidden="true"></div>
+          <div class="card-corner tr" aria-hidden="true"></div>
+          <div class="card-corner bl" aria-hidden="true"></div>
+          <div class="card-corner br" aria-hidden="true"></div>
+          <span class="card-num">08</span>
+          <h2 class="card-title">烬庭</h2>
+          <p class="card-desc">
+            持剑踏入城堡外庭，挑战玄骸·守门人。<br />
+            轻重剑 · 翻滚与跳跃 · 防御与架势交锋。
+          </p>
+          <span class="card-meta">status: Demo · 可以玩了</span>
+          <div class="card-badge">ACTION · BOSS FIGHT</div>
+        </a>
+
+        <!-- 彩蛋：归档内容默认隐藏，连点下方 more 十次后展开 -->
+        <div class="more-panel" id="more-panel">
+          <a class="card" href="life-test/">
+            <div class="card-corner tl" aria-hidden="true"></div>
+            <div class="card-corner tr" aria-hidden="true"></div>
+            <div class="card-corner bl" aria-hidden="true"></div>
+            <div class="card-corner br" aria-hidden="true"></div>
+            <span class="card-num">04</span>
+            <h2 class="card-title">凡人歌</h2>
+            <p class="card-desc">
+              旧版人生模拟器（已归档至 life-test）。<br />
+              随机 roll 出身词条，活出你的一生。
+            </p>
+            <span class="card-meta">status: 归档 · 可玩</span>
+            <div class="card-badge">ARCHIVED</div>
+          </a>
+        </div>
+
+
+      </div>
+
+      <p class="more-egg">
+        <button
+          class="more-hint"
+          id="more-hint"
+          type="button"
+          aria-expanded="false"
+          aria-controls="more-panel"
+        >
+          <span id="more-hint-text">more</span>
+        </button>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span id="year">2026</span> whims</span>
+    <span class="foot-sep">/</span>
+    <span>游戏与交互实验</span>
+    <span class="foot-sep">/</span>
+    <span>若页面崩溃，请刷新，或对它说声抱歉</span>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
